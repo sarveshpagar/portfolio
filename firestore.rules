@@ -1,0 +1,66 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: messages
+    // Document ID: Auto-generated
+    // Fields:
+    //   - name: string (required, max 100 chars) - The name of the sender
+    //   - email: string (required, valid email) - The email address of the sender
+    //   - message: string (required, max 2000 chars) - The content of the message
+    //   - createdAt: timestamp (required) - The time the message was sent
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    
+    // Check if the user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Check if user is an admin
+    function isAdmin() {
+      return isAuthenticated() && request.auth.token.email == "sarveshapagar1113@gmail.com" && request.auth.token.email_verified == true;
+    }
+
+    // Validate email format
+    function isValidEmail(email) {
+      return email is string &&
+        email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    // Validate that the document contains only the allowed fields
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+
+    // Domain Validator for Message
+    function isValidMessage(data) {
+      return hasOnlyAllowedFields(['name', 'email', 'message', 'createdAt']) &&
+             data.name is string && data.name.size() > 0 && data.name.size() <= 100 &&
+             isValidEmail(data.email) &&
+             data.message is string && data.message.size() > 0 && data.message.size() <= 2000 &&
+             data.createdAt is timestamp;
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /messages/{messageId} {
+      // Anyone can create a message (unauthenticated users included)
+      allow create: if isValidMessage(request.resource.data) && 
+                       request.resource.data.createdAt == request.time;
+      
+      // Only admin can read, update, or delete messages
+      allow read, update, delete: if isAdmin();
+    }
+  }
+}
