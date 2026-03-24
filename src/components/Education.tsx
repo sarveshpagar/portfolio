@@ -28,13 +28,13 @@ export default function Education() {
   return (
     <section id="education" className="relative z-10 w-full py-12 md:py-16 overflow-hidden">
       {/* Heading */}
-      <div className="flex flex-col items-center mb-16 md:mb-24">
+      <div className="flex flex-col items-center mb-16 md:mb-24 text-center">
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-4xl md:text-5xl font-bold tracking-tight text-slate-100 mb-4 drop-shadow-lg"
+          className="text-3xl md:text-4xl font-bold text-slate-100 uppercase tracking-widest mb-4 drop-shadow-lg"
         >
           Education
         </motion.h2>
@@ -43,7 +43,7 @@ export default function Education() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          className="h-1 w-24 bg-teal-400 rounded-full shadow-[0_0_15px_rgba(45,212,191,0.4)]"
+          className="h-1 w-20 bg-primary rounded-full opacity-80"
         />
       </div>
 

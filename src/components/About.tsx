@@ -14,14 +14,16 @@ export default function About() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="lg:sticky lg:top-32"
         >
-          <div className="flex items-center gap-2 text-xs font-semibold text-primary uppercase tracking-wider mb-6">
-            <Cpu className="size-4" />
-            <span>System Profile</span>
+          <div className="flex flex-col items-start mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-100 uppercase tracking-widest mb-4 drop-shadow-lg">
+              System Profile
+            </h2>
+            <div className="h-1 w-20 bg-primary rounded-full opacity-80"></div>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-slate-100">
+          <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-slate-100">
             Turning computation into{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">cognition.</span>
-          </h2>
+          </h3>
         </motion.div>
 
         {/* Right Column: Content Blocks */}

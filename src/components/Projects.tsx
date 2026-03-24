@@ -151,18 +151,24 @@ export default function Projects() {
   return (
     <>
       <section id="projects" className="py-12 md:py-16 relative z-10 w-full">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.2 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="flex flex-col items-center text-center mb-12 max-w-7xl mx-auto px-6 md:px-16"
-      >
-        <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-100">
+      <div className="flex flex-col items-center mb-16 md:mb-24 text-center max-w-7xl mx-auto px-6 md:px-16">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-3xl md:text-4xl font-bold text-slate-100 uppercase tracking-widest mb-4 drop-shadow-lg"
+        >
           Featured Projects
-        </h2>
-        <div className="h-1 w-20 bg-primary mt-3 rounded-full opacity-80"></div>
-      </motion.div>
+        </motion.h2>
+        <motion.div 
+          initial={{ opacity: 0, scale: 0 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          className="h-1 w-20 bg-primary rounded-full opacity-80"
+        />
+      </div>
 
       {/* Auto-scrolling Horizontal List */}
       <motion.div 

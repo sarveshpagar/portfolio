@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { Mail, Send, Github, Linkedin, Loader2 } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase";
 
@@ -42,20 +42,24 @@ export default function Contact() {
 
   return (
     <section id="contact" className="py-12 md:py-16 px-6 md:px-16 max-w-7xl mx-auto relative z-10">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.2 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="flex flex-col items-center text-center gap-3 mb-12"
-      >
-        <div className="flex items-center gap-3">
-          <Mail className="text-primary size-8" />
-          <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-widest text-slate-100">
-            Establish Connection
-          </h2>
-        </div>
-      </motion.div>
+      <div className="flex flex-col items-center mb-16 md:mb-24 text-center">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-3xl md:text-4xl font-bold text-slate-100 uppercase tracking-widest mb-4 drop-shadow-lg"
+        >
+          Establish Connection
+        </motion.h2>
+        <motion.div 
+          initial={{ opacity: 0, scale: 0 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          className="h-1 w-20 bg-primary rounded-full opacity-80"
+        />
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 bg-slate-800/30 rounded-3xl border border-primary/20 overflow-hidden glow-border backdrop-blur-sm">
         {/* Contact Form */}
