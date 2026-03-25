@@ -74,7 +74,7 @@ export default function ParticleBackground() {
               width: 800,
               height: 800,
             },
-            value: 100,
+            value: 60,
           },
           opacity: {
             value: 0.15,

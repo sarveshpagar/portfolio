@@ -369,7 +369,7 @@ export default function Skills() {
           <FallbackTechGrid techStack={filteredStack} />
         ) : (
           <ErrorBoundary fallback={<FallbackTechGrid techStack={filteredStack} />}>
-            <Canvas shadows camera={{ position: [0, 0, 15], fov: 35 }} gl={{ preserveDrawingBuffer: true }}>
+            <Canvas shadows dpr={[1, 1.5]} camera={{ position: [0, 0, 15], fov: 35 }}>
               <ambientLight intensity={0.5} />
               <directionalLight position={[10, 10, 5]} intensity={1} castShadow />
               <Environment preset="city" />
