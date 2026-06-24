@@ -21,12 +21,40 @@ export default function Contact() {
     setSubmitStatus("idle");
 
     try {
+      // 1. Save message to Firestore database
       await addDoc(collection(db, "messages"), {
         name: formData.name,
         email: formData.email,
         message: formData.message,
         createdAt: serverTimestamp(),
       });
+
+      // 2. Dispatch real email notification via Web3Forms
+      const web3FormsKey = (import.meta as any).env.VITE_WEB3FORMS_ACCESS_KEY;
+      if (web3FormsKey) {
+        await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            access_key: web3FormsKey,
+            name: formData.name,
+            email: formData.email,
+            message: formData.message,
+            subject: `📬 Portfolio Contact Form: ${formData.name}`,
+            from_name: "Portfolio Notification Engine",
+            replyto: formData.email,
+          }),
+        });
+      } else {
+        // Fallback: If Web3Forms key is not yet set, we notify in the console or send to a pre-defined channel
+        console.warn(
+          "VITE_WEB3FORMS_ACCESS_KEY is missing from environment variables. Please add it to your secrets to receive instant email notifications."
+        );
+      }
+
       setSubmitStatus("success");
       setFormData({ name: "", email: "", message: "" });
       
