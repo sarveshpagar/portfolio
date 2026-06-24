@@ -8,9 +8,14 @@ const experiences = [
     period: "Nov 2023 - Feb 2024",
   },
   {
-    role: "AI Engineer",
+    role: "AI Developer",
     company: "Aqeeq Technologies",
-    period: "Nov 2024 - Present",
+    period: "Nov 2024 - Mar 2026",
+  },
+  {
+    role: "Gen AI Engineer",
+    company: "Tata Consultancy Services",
+    period: "Apr 2026 - Present",
   },
 ];
 
@@ -31,13 +36,21 @@ export default function Experience() {
 
   // Sync the active index based on the particle's position
   useMotionValueEvent(progress, "change", (latest) => {
-    if (latest >= 0 && latest < 25) {
+    const totalExp = experiences.length;
+    if (totalExp <= 1) {
       setActiveIndex(0);
-    } else if (latest > 75 && latest <= 100) {
-      setActiveIndex(1);
-    } else {
-      setActiveIndex(-1);
+      return;
     }
+    let foundIndex = -1;
+    for (let i = 0; i < totalExp; i++) {
+      const targetPercent = (i / (totalExp - 1)) * 100;
+      const threshold = 15;
+      if (Math.abs(latest - targetPercent) < threshold) {
+        foundIndex = i;
+        break;
+      }
+    }
+    setActiveIndex(foundIndex);
   });
 
   // Map the progress to the particle's top CSS property
@@ -90,7 +103,7 @@ export default function Experience() {
         </div>
 
         {/* Milestones */}
-        <div className="relative flex flex-col gap-24 md:gap-32">
+        <div className="relative flex flex-col gap-12 md:gap-16">
           {experiences.map((exp, index) => {
             const isEven = index % 2 === 0;
             // Node is active if the particle is over it OR if the user is hovering over it

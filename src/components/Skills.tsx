@@ -64,7 +64,6 @@ const techStack = [
   { name: "FastAPI", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg", category: "AI/ML" },
   { name: "Flask", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flask/flask-original.svg", category: "AI/ML" },
   { name: "LangChain", url: "https://avatars.githubusercontent.com/u/126733545?v=4", category: "AI/ML" },
-  { name: "LangGraph", url: "https://avatars.githubusercontent.com/u/126733545?v=4", category: "AI/ML" },
   
   // Tools
   { name: "Git", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg", category: "Tools" },
@@ -173,11 +172,16 @@ function FallbackCube({ name, position, size = 1.2 }: { name: string; position: 
 
 function useCanvasTexture(url: string) {
   const [texture, setTexture] = useState<THREE.CanvasTexture | null>(null);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
+    setTexture(null);
+    setError(false);
+    
     const img = new Image();
     img.crossOrigin = "Anonymous";
+    
     img.onload = () => {
       if (!isMounted) return;
       const canvas = document.createElement('canvas');
@@ -193,30 +197,29 @@ function useCanvasTexture(url: string) {
         ctx.arc(256, 256, 220, 0, Math.PI * 2);
         ctx.fill();
 
-        const imgW = img.width || 256;
-        const imgH = img.height || 256;
-        const padding = 100; // Increased padding to fit inside the circle
-        const availableSize = 512 - (padding * 2);
-        const scale = Math.min(availableSize / imgW, availableSize / imgH);
-        const w = imgW * scale;
-        const h = imgH * scale;
-        
-        ctx.drawImage(img, (512 - w) / 2, (512 - h) / 2, w, h);
+        // Draw image with a fixed size to avoid issues with SVG dimensions
+        const size = 300;
+        ctx.drawImage(img, 256 - size/2, 256 - size/2, size, size);
         
         const tex = new THREE.CanvasTexture(canvas);
         tex.colorSpace = THREE.SRGBColorSpace;
+        tex.needsUpdate = true;
         setTexture(tex);
       }
     };
+    
+    img.onerror = () => {
+      if (isMounted) setError(true);
+    };
+    
     img.src = url;
     
     return () => {
       isMounted = false;
-      if (texture) texture.dispose();
     };
   }, [url]);
 
-  return texture;
+  return { texture, error };
 }
 
 function TechCube({ name, imgUrl, position, size = 1.2, setHoveredTech }: { name: string; imgUrl: string; position: [number, number, number]; size?: number; setHoveredTech: (name: string | null) => void }) {
@@ -230,7 +233,7 @@ function TechCube({ name, imgUrl, position, size = 1.2, setHoveredTech }: { name
     linearFactor: [1, 1, 0] // Lock Z-axis movement so cubes never go behind each other
   }));
   const [hovered, setHovered] = useState(false);
-  const texture = useCanvasTexture(imgUrl);
+  const { texture, error } = useCanvasTexture(imgUrl);
 
   useEffect(() => {
     if (hovered) {
@@ -258,11 +261,19 @@ function TechCube({ name, imgUrl, position, size = 1.2, setHoveredTech }: { name
       <boxGeometry args={[size, size, size]} />
       <meshStandardMaterial color="#1e293b" />
       
-      {texture && (
+      {texture && !error && (
         <mesh>
           <boxGeometry args={[size + 0.01, size + 0.01, size + 0.01]} />
-          <meshBasicMaterial map={texture} transparent={true} alphaTest={0.05} side={THREE.DoubleSide} />
+          <meshBasicMaterial map={texture} transparent={false} alphaTest={0.5} side={THREE.DoubleSide} />
         </mesh>
+      )}
+
+      {error && (
+        <Html center position={[0, 0, size/2 + 0.01]}>
+          <div className="text-sky-400 font-bold text-xs md:text-sm whitespace-nowrap pointer-events-none drop-shadow-md">
+            {name}
+          </div>
+        </Html>
       )}
     </mesh>
   );
@@ -386,7 +397,7 @@ export default function Skills() {
                     const y = row * spacing + 2; // Spawn higher up so they fall in
                     const z = 0; // Strictly 0 to prevent Z-axis overlapping
                     return (
-                      <ErrorBoundary key={tech.url} fallback={<FallbackCube name={tech.name} position={[x, y, z]} size={cubeSize} />}>
+                      <ErrorBoundary key={tech.name} fallback={<FallbackCube name={tech.name} position={[x, y, z]} size={cubeSize} />}>
                         <TechCube name={tech.name} imgUrl={tech.url} position={[x, y, z]} size={cubeSize} setHoveredTech={setHoveredTech} />
                       </ErrorBoundary>
                     );
