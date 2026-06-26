@@ -19,13 +19,13 @@ export default function Hero() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2, ease: "easeOut" }}
-        className="relative z-10 max-w-4xl px-6 py-20 w-full"
+        className="relative z-10 max-w-4xl px-6 py-12 md:py-16 w-full"
       >
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
-          className="mb-8 inline-flex items-center gap-3 rounded-full border border-slate-800/60 bg-slate-900/50 backdrop-blur-md px-5 py-2.5 text-sm font-mono shadow-lg"
+          className="mb-6 inline-flex items-center gap-3 rounded-full border border-slate-800/60 bg-slate-900/50 backdrop-blur-md px-5 py-2.5 text-sm font-mono shadow-lg"
         >
           <span className="text-slate-400">$</span>
           <span className="text-slate-200">echo</span>
@@ -36,7 +36,7 @@ export default function Hero() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
-          className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 tracking-tight text-slate-100"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight text-slate-100"
         >
           Sarvesh <span className="text-primary">Pagar</span>
         </motion.h1>
@@ -45,7 +45,7 @@ export default function Hero() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
-          className="text-xl md:text-2xl font-semibold mb-8 text-slate-300 h-8 flex items-center gap-3 font-mono"
+          className="text-xl md:text-2xl font-semibold mb-6 text-slate-300 h-8 flex items-center gap-3 font-mono"
         >
           <span className="w-1.5 h-6 bg-primary inline-block rounded-full"></span>
           <div className="flex items-center gap-2">
@@ -71,7 +71,7 @@ export default function Hero() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.8, ease: "easeOut" }}
-          className="text-base md:text-lg text-slate-400 max-w-2xl mb-10 leading-relaxed"
+          className="text-base md:text-lg text-slate-400 max-w-2xl mb-8 leading-relaxed"
         >
           I turn raw data into intelligent systems — building scalable ML pipelines, fine-tuning large language models, and shipping AI-powered applications that solve real problems in production, not just notebooks.
         </motion.p>

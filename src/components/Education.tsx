@@ -51,7 +51,7 @@ export default function Education() {
       <div className="relative max-w-5xl mx-auto px-4 md:px-12">
         
         {/* Desktop View (Horizontal) */}
-        <div className="hidden md:block w-full pb-48 pt-48">
+        <div className="hidden md:block w-full pb-32 pt-32">
           <div className="relative w-full h-[2px] flex items-center">
             
             {/* Faint background track */}

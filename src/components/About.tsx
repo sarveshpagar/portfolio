@@ -20,7 +20,7 @@ export default function About() {
             </h2>
             <div className="h-1 w-20 bg-primary rounded-full opacity-80"></div>
           </div>
-          <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-slate-100">
+          <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-slate-100">
             Turning computation into{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">cognition.</span>
           </h3>

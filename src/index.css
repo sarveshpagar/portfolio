@@ -22,6 +22,13 @@ html {
   scrollbar-width: thin;
   scrollbar-color: rgba(56, 189, 248, 0.4) var(--color-background-dark);
   overflow-x: hidden;
+  font-size: 100%;
+}
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 80%; /* Scales down all rem-based layouts, spacing, and typography to exactly 80% zoom */
+  }
 }
 
 /* Custom Scrollbar for Webkit */
